@@ -4,6 +4,6 @@ namespace SoftUniFw\Routers;
 class DefaultRouter {
 
     public function parse(){
-        echo 'ok';
+      echo '<pre>'.print_r($_SERVER,true).'</pre>';
     }
 }
