@@ -16,7 +16,8 @@ class FrontController
 
     public function dispatch()
     {
-
+        $a = new \SoftUniFw\Routers\DefaultRouter();
+        $a->parse();
     }
 
     public static function getInstance()
