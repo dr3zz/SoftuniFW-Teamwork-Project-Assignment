@@ -29,6 +29,10 @@ class App
         return $this->_config->getConfigFolder();
     }
 
+    public function getConfig(){
+        return $this->_config;
+    }
+
     public function run()
     {
         if ($this->_config->getConfigFolder() == null) {
