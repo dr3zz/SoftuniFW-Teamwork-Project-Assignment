@@ -12,7 +12,7 @@ class DefaultRouter
         $method = null;
         $_params = explode('/', $_uri);
         if ($_params[0]) {
-            $controller .= ucfirst($_params[0]);
+            $controller = ucfirst($_params[0]);
 
             if ($_params[1]) {
                 $method = $_params[1];
