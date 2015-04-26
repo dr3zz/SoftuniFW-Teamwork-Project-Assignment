@@ -9,6 +9,7 @@ class App
     private $_config = null;
     private $_frontController = null;
     private $router = null;
+    private $_dbConnections = array();
 
     private function __construct()
     {
@@ -42,7 +43,8 @@ class App
     }
 
 
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->_config;
     }
 
@@ -52,19 +54,42 @@ class App
             $this->setConfigFolder('../config');
         }
         $this->_frontController = \SoftUniFw\FrontController::getInstance();
-        if($this->router instanceof \SoftUniFw\Routers\IRouter) {
+        if ($this->router instanceof \SoftUniFw\Routers\IRouter) {
             $this->_frontController->setRouter($this->router);
-        }
-        else if($this->router == 'JsonRPCRouter') {
+        } else if ($this->router == 'JsonRPCRouter') {
             $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
-        }
-        else if ($this->router =='CLIRouter') {
+        } else if ($this->router == 'CLIRouter') {
             $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
-        }else {
+        } else {
             $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
         }
 
         $this->_frontController->dispatch();
+    }
+
+
+    /**
+     * @param string $connection
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getConnection($connection = 'default')
+    {
+        if (!$connection) {
+            throw new \Exception('No connection identifier provided', 500);
+        }
+        if($this->_dbConnections[$connection]) {
+            return $this->_dbConnections[$connection];
+        }
+        $_cnf = $this->getConfig()->database;
+        if(!$_cnf[$connection]) {
+            throw new \Exception('No valid connection identificator is provided',500);
+        }
+        $dbh = new \PDO($_cnf[$connection]['connection_uri'],$_cnf[$connection]['username'],
+            $_cnf[$connection]['password'],$_cnf[$connection]['pdo_options']);
+        $this->_dbConnections[$connection] = $dbh;
+        return $dbh;
+
     }
 
     /**

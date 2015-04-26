@@ -13,9 +13,12 @@ final class Loader
 
     }
 
+    /**
+     *
+     */
     public static function registerAutoLoad()
     {
-        spl_autoload_register(array("\SoftUniFw\Loader", 'autoload'));
+        spl_autoload_register(array('\SoftUniFw\Loader', 'autoload'));
     }
 
     public static function autoload($class)
