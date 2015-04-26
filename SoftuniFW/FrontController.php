@@ -17,17 +17,7 @@ class FrontController
     public function dispatch()
     {
         $a = new \SoftUniFw\Routers\DefaultRouter();
-        $a->parse();
-        $controller = $a->getController();
-        $method = $a->getMethod();
-
-        if ($controller == null) {
-            $controller = $this->getDefaultController();
-        }
-        if ($method == null) {
-            $method = $this->getDefaultMethod();
-        }
-
+        $a->getURI();
     }
 
     public function getDefaultController()
