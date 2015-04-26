@@ -8,6 +8,7 @@ class App
     private static $_instance = null;
     private $_config = null;
     private $_frontController = null;
+    private $router = null;
 
     private function __construct()
     {
@@ -29,6 +30,18 @@ class App
         return $this->_config->getConfigFolder();
     }
 
+
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    public function setRouter($router)
+    {
+        $this->router = $router;
+    }
+
+
     public function getConfig(){
         return $this->_config;
     }
@@ -39,6 +52,18 @@ class App
             $this->setConfigFolder('../config');
         }
         $this->_frontController = \SoftUniFw\FrontController::getInstance();
+        if($this->router instanceof \SoftUniFw\Routers\IRouter) {
+            $this->_frontController->setRouter($this->router);
+        }
+        else if($this->router == 'JsonRPCRouter') {
+            $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
+        }
+        else if ($this->router =='CLIRouter') {
+            $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
+        }else {
+            $this->_frontController->setRouter(new \SoftUniFw\Routers\DefaultRouter());
+        }
+
         $this->_frontController->dispatch();
     }
 

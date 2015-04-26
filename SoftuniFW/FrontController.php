@@ -10,17 +10,34 @@ class FrontController
     private $ns = null;
     private $controller = null;
     private $method = null;
+    private $router = null;
 
     private function __construct()
     {
 
     }
 
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+
+    public function setRouter(\SoftUniFw\Routers\IRouter $router)
+    {
+        $this->router = $router;
+    }
+
+
+
 
     public function dispatch()
     {
-        $a = new \SoftUniFw\Routers\DefaultRouter();
-        $_uri = $a->getURI();
+        if($this->router == null){
+            throw new \Exception ('No valid router found', 500);
+        }
+
+        $_uri =$this->router->getURI();
         $routes = \SoftUniFw\App::getInstance()->getConfig()->routes;
         $_rc = null;
         if (is_array($routes) && count($routes) > 0) {
@@ -37,16 +54,16 @@ class FrontController
         }
         if ($this->ns == null && $routes['*']['namespace']) {
             $this->ns = $routes['*']['namespace'];
-             $_rc = $routes['*'];
+            $_rc = $routes['*'];
         } else if ($this->ns == null && !$routes['*']['namespace']) {
             throw new \Exception('Default route missing', 500);
         }
 
         $_params = explode('/', $_uri);
         if ($_params[0]) {
-            $this->controller = $_params[0];
+            $this->controller = strtolower($_params[0]);
             if ($_params[1]) {
-                $this->method = $_params[1];
+                $this->method = strtolower($_params[1]);
             } else {
                 $this->method = $this->getDefaultMethod();
             }
@@ -55,15 +72,16 @@ class FrontController
             $this->method = $this->getDefaultMethod();
         }
 
-        if (is_array($_rc) && $_rc['controllers'] && $_rc['controllers'][$this->controller]['to']) {
+        if (is_array($_rc) && $_rc['controllers']) {
 
-            if($_rc['controllers'][$this->controller]['methods'][$this->method]) {
-                $this->method = $_rc['controllers'][$this->controller]['methods'][$this->method];
+            if ($_rc['controllers'][$this->controller]['methods'][$this->method]) {
+                $this->method = strtolower($_rc['controllers'][$this->controller]['methods'][$this->method]);
             }
-            $this->controller =  $_rc['controllers'][$this->controller]['to'];
-
+            if (isset($_rc['controllers'][$this->controller]['to'])) {
+                $this->controller = strtolower($_rc['controllers'][$this->controller]['to']);
+            }
         }
-        $f = $this->ns.'\\'.$this->controller;
+        $f = $this->ns . '\\' . ucfirst($this->controller);
         $newController = new $f();
         $newController->{$this->method}();
     }
@@ -72,9 +90,9 @@ class FrontController
     {
         $controller = \SoftUniFw\App::getInstance()->getConfig()->app['default_controller'];
         if ($controller) {
-            return $controller;
+            return strtolower($controller);
         }
-        return 'Index';
+        return 'index';
     }
 
 
@@ -82,7 +100,7 @@ class FrontController
     {
         $method = \SoftUniFw\App::getInstance()->getConfig()->app['default_method'];
         if ($method) {
-            return $method;
+            return strtolower($method);
         }
         return 'index';
     }
