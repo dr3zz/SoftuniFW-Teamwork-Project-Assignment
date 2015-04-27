@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftuniFW\Sessions;
+namespace SoftUniFW\Sessions;
 
 
 class NativeSession implements ISession
@@ -9,7 +9,7 @@ class NativeSession implements ISession
     function __construct($name, $lifetime = 3600, $path = null, $domain = null, $secure = false)
     {
         if (strlen($name) < 1) {
-            $name = '_sess';
+            $name = '__sess';
         }
         session_name($name);
         session_set_cookie_params($lifetime, $path, $domain, $secure, true);

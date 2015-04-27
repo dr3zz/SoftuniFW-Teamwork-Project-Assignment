@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUniFw\Routers;
+namespace SoftUniFW\Routers;
 
 
 interface IRouter {

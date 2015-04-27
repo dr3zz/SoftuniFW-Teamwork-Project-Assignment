@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftuniFW\Sessions;
+namespace SoftUniFW\Sessions;
 
 
 interface ISession

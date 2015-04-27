@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SoftUniFw;
+namespace SoftUniFW;
 
 
 class Common

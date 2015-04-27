@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUniFw;
+namespace SoftUniFW;
 
 
 final class Loader

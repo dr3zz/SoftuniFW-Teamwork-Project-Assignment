@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUniFw;
+namespace SoftUniFW;
 
 
 class FrontController
@@ -23,7 +23,7 @@ class FrontController
     }
 
 
-    public function setRouter(\SoftUniFw\Routers\IRouter $router)
+    public function setRouter(\SoftUniFW\Routers\IRouter $router)
     {
         $this->router = $router;
     }
@@ -38,7 +38,7 @@ class FrontController
         }
 
         $_uri =$this->router->getURI();
-        $routes = \SoftUniFw\App::getInstance()->getConfig()->routes;
+        $routes = \SoftUniFW\App::getInstance()->getConfig()->routes;
         $_rc = null;
         if (is_array($routes) && count($routes) > 0) {
             foreach ($routes as $key => $value) {
@@ -88,7 +88,7 @@ class FrontController
 
     public function getDefaultController()
     {
-        $controller = \SoftUniFw\App::getInstance()->getConfig()->app['default_controller'];
+        $controller = \SoftUniFW\App::getInstance()->getConfig()->app['default_controller'];
         if ($controller) {
             return strtolower($controller);
         }
@@ -98,7 +98,7 @@ class FrontController
 
     public function getDefaultMethod()
     {
-        $method = \SoftUniFw\App::getInstance()->getConfig()->app['default_method'];
+        $method = \SoftUniFW\App::getInstance()->getConfig()->app['default_method'];
         if ($method) {
             return strtolower($method);
         }
@@ -108,7 +108,7 @@ class FrontController
     public static function getInstance()
     {
         if (self::$_instance == null) {
-            self::$_instance = new \SoftUniFw\FrontController();
+            self::$_instance = new \SoftUniFW\FrontController();
         }
         return self::$_instance;
     }

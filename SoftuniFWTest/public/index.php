@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
-include '../../SoftUniFw/App.php';
+include '../../SoftniFw/App.php';
 
 $app = \SoftUniFW\App::getInstance();
 

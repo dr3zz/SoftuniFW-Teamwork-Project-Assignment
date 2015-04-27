@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUniFw;
+namespace SoftUniFW;
 
 
 class InputData
@@ -54,7 +54,7 @@ class InputData
     {
         if ($this->hasGet($id)) {
             if ($normalize != null) {
-                    return \SoftUniFw\Common::normalize($this->_get[$id],$normalize);
+                    return \SoftUniFW\Common::normalize($this->_get[$id],$normalize);
             }
             return $this->_get[$id];
         }
@@ -65,7 +65,7 @@ class InputData
     {
         if ($this->hasPost($name)) {
             if ($normalize != null) {
-                return \SoftUniFw\Common::normalize($this->_post[$name],$normalize);
+                return \SoftUniFW\Common::normalize($this->_post[$name],$normalize);
             }
             return $this->_post[$name];
         }
@@ -76,7 +76,7 @@ class InputData
     {
         if ($this->hasCookies($name)) {
             if ($normalize != null) {
-                return \SoftUniFw\Common::normalize($this->_cookies[$name],$normalize);
+                return \SoftUniFW\Common::normalize($this->_cookies[$name],$normalize);
             }
             return $this->_cookies[$name];
         }
@@ -86,7 +86,7 @@ class InputData
     public static function getInstance()
     {
         if (self::$_instance == null) {
-            self::$_instance = new \SoftUniFw\InputData();
+            self::$_instance = new \SoftUniFW\InputData();
         }
         return self::$_instance;
     }

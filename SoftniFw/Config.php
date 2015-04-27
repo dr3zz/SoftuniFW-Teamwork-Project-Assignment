@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUniFw;
+namespace SoftUniFW;
 
 
 class Config
@@ -31,7 +31,7 @@ class Config
             $this->_configFolder = $_configFolder . DIRECTORY_SEPARATOR;
             $ns = $this->app['namespaces'];
             if (is_array($ns)) {
-                \SoftUniFw\Loader::registerNamespaces($ns);
+                \SoftUniFW\Loader::registerNamespaces($ns);
             }
         } else {
             throw new \Exception('Config directory read error:' . $configFolder);
@@ -67,12 +67,12 @@ class Config
 
 
     /**
-     * @return \SoftUniFw\Config
+     * @return \SoftUniFW\Config
      */
     public static function getInstance()
     {
         if (self::$_instance == null) {
-            self::$_instance = new \SoftUniFw\Config();
+            self::$_instance = new \SoftUniFW\Config();
         }
         return self::$_instance;
     }

@@ -1,8 +1,8 @@
 <?php
 
 
-namespace SoftuniFW\DB;
-use SoftUniFw\App as App;
+namespace SoftUniFW\DB;
+use SoftUniFW\App as App;
 
 class SimpleDB
 {
