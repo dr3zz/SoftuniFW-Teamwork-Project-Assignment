@@ -2,7 +2,8 @@
 error_reporting(E_ALL ^ E_NOTICE);
 include '../../SoftUniFw/App.php';
 
-$app = \SoftUniFw\App::getInstance();
-$db = new \SoftUniFw\DB\SimpleDB();
+$app = \SoftUniFW\App::getInstance();
+
 
 $app->run();
+$app->getSession()->counter+=1;
