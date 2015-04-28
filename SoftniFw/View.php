@@ -8,16 +8,16 @@ class View
 {
 
     private static $_instance = null;
-    private $viewPath = null;
-    private $viewDir = null;
-    private $extension = '.php';
-    private $data = array();
+    private $___viewPath = null;
+    private $___viewDir = null;
+    private $___extension = '.php';
+    private $___data = array();
 
     private function __construct()
     {
-        $this->viewPath = \SoftUniFW\App::getInstance()->getConfig()->app['viewsDirectory'];
-        if ($this->viewPath == null) {
-            $this->viewPath = realpath('../views');
+        $this->___viewPath = \SoftUniFW\App::getInstance()->getConfig()->app['viewsDirectory'];
+        if ($this->___viewPath == null) {
+            $this->___viewPath = realpath('../views');
         }
     }
 
@@ -27,7 +27,7 @@ class View
         if ($path) {
             $path = realpath($path) . DIRECTORY_SEPARATOR;
             if (is_dir($path) && is_readable($path)) {
-                $this->viewDir = $path;
+                $this->___viewDir = $path;
             } else {
                 throw new \Exception('view path', 500);
             }
@@ -39,7 +39,7 @@ class View
     public function display($name, $data = array(), $returnAsString = false)
     {
         if (is_array($data)) {
-            $this->data = array_merge($this->data, $data);
+            $this->___data = array_merge($this->___data, $data);
         }
         if ($returnAsString) {
             return $this->_includeFile($name);
@@ -51,14 +51,14 @@ class View
 
     private function _includeFile($file)
     {
-        if ($this->viewDir == null) {
-            $this->setViewDirectory($this->viewPath);
+        if ($this->___viewDir == null) {
+            $this->setViewDirectory($this->___viewPath);
         }
-        $p = str_replace('.', DIRECTORY_SEPARATOR, $file);
-        $fl = $this->viewDir . $p . $this->extension;
-        if (file_exists($fl) && is_readable($fl)) {
+
+        $___fl = $this->___viewDir . str_replace('.', DIRECTORY_SEPARATOR, $file) . $this->___extension;
+        if (file_exists($___fl) && is_readable($___fl)) {
             ob_start();
-            include $fl;
+            include $___fl;
             return ob_get_clean();
         } else {
             throw new \Exception ('View ' . $file . ' cannot be included', 500);
@@ -67,12 +67,12 @@ class View
 
     public function getData($name)
     {
-        return $this->data[$name];
+        return $this->___data[$name];
     }
 
     public function setData($name, $value)
     {
-        $this->data[$name] = $value;
+        $this->___data[$name] = $value;
     }
 
 
