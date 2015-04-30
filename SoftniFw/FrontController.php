@@ -8,6 +8,9 @@ class FrontController
 
     private static $_instance = null;
     private $ns = null;
+    /**
+     * @var \SoftUniFw\Routers\IRouter;
+     */
     private $controller = null;
     private $method = null;
     private $router = null;
@@ -81,6 +84,10 @@ class FrontController
                 $this->controller = strtolower($_rc['controllers'][$this->controller]['to']);
             }
         }
+
+        $input = \SoftUniFW\InputData::getInstance();
+        $input->setPost($this->controller->getPost());
+
         $f = $this->ns . '\\' . ucfirst($this->controller);
         $newController = new $f();
         $newController->{$this->method}();

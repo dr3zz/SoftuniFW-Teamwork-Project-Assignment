@@ -8,6 +8,7 @@ class JsonRPCRouter implements \SoftUniFW\Routers\IRouter
 {
     private $_map = array();
     private $_requestId;
+    private $_post = array();
 
     public function __construct()
     {
@@ -42,6 +43,7 @@ class JsonRPCRouter implements \SoftUniFW\Routers\IRouter
         } else {
             if ($this->_map[$request['method']]) {
                 $this->_requestId = $request['id'];
+                $this->_post = $request['params'];
                 return $this->_map[$request['method']];
             } else {
                 throw new \Exception('Method not found', 501);
@@ -54,4 +56,10 @@ class JsonRPCRouter implements \SoftUniFW\Routers\IRouter
     {
         return $this->_requestId;
     }
+
+    public function getPost()
+    {
+        return $this->_post;
+    }
+
 }
