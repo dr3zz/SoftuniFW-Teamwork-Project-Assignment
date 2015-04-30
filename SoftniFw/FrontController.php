@@ -32,15 +32,13 @@ class FrontController
     }
 
 
-
-
     public function dispatch()
     {
-        if($this->router == null){
+        if ($this->router == null) {
             throw new \Exception ('No valid router found', 500);
         }
 
-        $_uri =$this->router->getURI();
+        $_uri = $this->router->getURI();
         $routes = \SoftUniFW\App::getInstance()->getConfig()->routes;
         $_rc = null;
         if (is_array($routes) && count($routes) > 0) {
@@ -61,12 +59,14 @@ class FrontController
         } else if ($this->ns == null && !$routes['*']['namespace']) {
             throw new \Exception('Default route missing', 500);
         }
-
+        $input = \SoftUniFW\InputData::getInstance();
         $_params = explode('/', $_uri);
         if ($_params[0]) {
             $this->controller = strtolower($_params[0]);
             if ($_params[1]) {
                 $this->method = strtolower($_params[1]);
+                unset($_params[0], $_params[1]);
+                $input->setGet(array_values($_params));
             } else {
                 $this->method = $this->getDefaultMethod();
             }
@@ -85,7 +85,7 @@ class FrontController
             }
         }
 
-        $input = \SoftUniFW\InputData::getInstance();
+
         $input->setPost($this->controller->getPost());
 
         $f = $this->ns . '\\' . ucfirst($this->controller);
