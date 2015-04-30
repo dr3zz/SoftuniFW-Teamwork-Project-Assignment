@@ -6,6 +6,10 @@ class Index
 {
     public function index3()
     {
+        $val = new \SoftUniFW\Validation();
+        $val->setRule('url','http://az.c@/')->setRule('minlength','http://az.c/',50);
+        var_dump($val->validate());
+        print_r($val->getErrors());
         $view = \SoftUniFW\View::getInstance();
         $view->username = 'az';
         $view->appendToLayout('body','admin.index');
